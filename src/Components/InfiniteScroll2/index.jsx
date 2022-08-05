@@ -17,12 +17,15 @@ export default function InfiniteScroll(props) {
   const [allData, setAllData] = useState([]);
   const [page, setPage] = useState(1);
   const pageRef = useRef(1)
+  const pageNum = 10
 
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      width: '105px',
+      fixed: 'left',
       render: text => <a>{text}</a>,
     },
     {
@@ -227,7 +230,7 @@ export default function InfiniteScroll(props) {
   const getData = (page) => {
     setLoading(true)
     setTimeout(()=>{
-      setData(allData.slice(0,page*10));
+      setData(allData.slice(0,page*pageNum));
       setLoading(false)
     },1000);
   };
@@ -239,6 +242,47 @@ export default function InfiniteScroll(props) {
     console.log(hasMore,data.length,allData.length,'======');
   };
 
+  // 防抖函数
+  const debounce = (fn, wait) => {
+    let timer = null;
+
+    return function() {
+      let context = this,
+          args = arguments;
+
+      // 如果此时存在定时器的话，则取消之前的定时器重新记时
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+
+      // 设置定时器，使事件间隔指定事件后执行
+      timer = setTimeout(() => {
+        fn.apply(context, args);
+      }, wait);
+    };
+  }
+
+  // 使用原生js获取dom监听滚动事件实现滚动加载数据。
+  const listenScroll = (e) => {
+    let targetDom = e.target
+    const clientHeight = targetDom.clientHeight;
+    const scrollHeight = targetDom.scrollHeight;
+    const scrollTop = targetDom.scrollTop;
+
+    // console.log(clientHeight,scrollHeight,scrollTop,'=============');
+
+    if((scrollHeight - clientHeight - scrollTop === 0) && ((allData.length/pageNum) > pageRef.current)) {
+      // console.log(pageRef.current,'=============');
+        setPage(pre => pre+1)
+        pageRef.current += 1
+    }
+  }
+
+  useEffect(() => {
+    // listenScroll();
+    document.getElementsByClassName('ant-table-body')[0].addEventListener('scroll', debounce(listenScroll,500) )
+  }, [allData]);
 
   useEffect(() => {
     createAllData(100);
@@ -248,44 +292,25 @@ export default function InfiniteScroll(props) {
     getData(page);
   }, [page,allData]);
 
-  // 使用原生js获取dom监听滚动事件实现滚动加载数据。
-  useEffect(() => {
-    document.getElementsByClassName('tableScroll')[0].addEventListener('scroll', function(e) {
-      let targetDom = e.target
-      const clientHeight = targetDom.clientHeight;
-      const scrollHeight = targetDom.scrollHeight;
-      const scrollTop = targetDom.scrollTop;
-
-      if((scrollHeight - clientHeight - scrollTop === 0) && ((allData.length/10)+1 > pageRef.current)) {
-        console.log(pageRef.current,'=============');
-          setPage(pre => pre+1)
-          pageRef.current += 1
-          // setData(allData.slice(0,(pageRef.current)*5))
-      }
-    });
-  }, [allData]);
-
   return (
     <div className='main'>
       <h1>InfiniteScroll</h1>
-      <div className='tableScroll'>
-        <ReactInfiniteScroll
-            initialLoad={false}
-            pageStart={1}
-            loadMore={handleInfiniteOnLoad}
-            // hasMore={!loading && hasMore}
-            hasMore={false}
-            useWindow={false}
-        >
-            <Table
-                columns={columns}
-                dataSource={data}
-                pagination={false}
-                loading={loading}
-                // scroll={{y:600}}
-            />
-        </ReactInfiniteScroll>
-      </div>
+      <ReactInfiniteScroll
+          initialLoad={false}
+          pageStart={1}
+          loadMore={handleInfiniteOnLoad}
+          // hasMore={!loading && hasMore}
+          hasMore={false}
+          useWindow={false}
+      >
+          <Table
+              columns={columns}
+              dataSource={data}
+              pagination={false}
+              loading={loading}
+              scroll={{x: 900,y:500}}
+          />
+      </ReactInfiniteScroll>
     </div>
     
   )

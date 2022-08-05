@@ -1,7 +1,8 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import InfiniteScroll from './Components/InfiniteScroll';
+// import InfiniteScroll from './Components/InfiniteScroll';
+import InfiniteScroll from './Components/InfiniteScroll2';
 
 function App() {
   return (
