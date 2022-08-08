@@ -2,7 +2,8 @@
 import './App.css';
 import React from 'react';
 // import InfiniteScroll from './Components/InfiniteScroll';
-import InfiniteScroll from './Components/InfiniteScroll2';
+// import InfiniteScroll from './Components/InfiniteScroll2';
+import InfiniteScroll from './Components/InfiniteScroll3';
 
 function App() {
   return (
