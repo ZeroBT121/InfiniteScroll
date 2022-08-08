@@ -1,12 +1,10 @@
 .main {
   width: 800px;
   /* height: 600px; */
-  /* background-color: #bfa; */
   margin: 0 auto;
-  /* padding-top: 150px; */
 }
 .tableScroll {
   height: 600px;
+  /* height: 554px; */
   overflow: auto;
-  /* overflow-x: auto; */
 }

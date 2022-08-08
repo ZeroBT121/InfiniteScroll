@@ -37,6 +37,7 @@ export default function InfiniteScroll(props) {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+      // width: '250px',
     },
     {
       title: 'Tags',
@@ -140,14 +141,18 @@ export default function InfiniteScroll(props) {
             loadMore={handleInfiniteOnLoad}
             hasMore={hasMore}
             useWindow={false}
-            getScrollParent={(le) => document.querySelector('.ant-table-body')}
+            // element={'tbody'}
+            // getScrollParent={(le) => document.querySelector('.ant-table-body')}
+            getScrollParent={() => document.getElementsByClassName('ant-table-tbody')[0]}
         >
             <Table
                 columns={columns}
                 dataSource={data}
                 pagination={false}
                 loading={loading}
-                scroll={{x: 900,y:500}}
+                // scroll={{x: 900,y:500}}
+                scroll={{x: 900}}
+                // scroll={{y:500}}
             >
             </Table>
         </ReactInfiniteScroll>

@@ -3,7 +3,12 @@ import './App.css';
 import React from 'react';
 // import InfiniteScroll from './Components/InfiniteScroll';
 // import InfiniteScroll from './Components/InfiniteScroll2';
+
+// 通过getScrollParent={(le) => document.querySelector('.ant-table-body')}监听该滚动条，存在多次调用的bug。
 import InfiniteScroll from './Components/InfiniteScroll3';
+
+// 监听document.querySelector('.ant-table-tbody')
+// import InfiniteScroll from './Components/InfiniteScroll4';
 
 function App() {
   return (
