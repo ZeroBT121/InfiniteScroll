@@ -9,9 +9,6 @@ import Tag from 'antd/lib/tag';
 import ReactInfiniteScroll from 'react-awesome-infinite-scroll';
 
 export default function InfiniteScroll(props) {
-  // let {loading, hasMore} = props
-  // let loading = false,
-  // hasMore = true;
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [data, setData] = useState([]);
