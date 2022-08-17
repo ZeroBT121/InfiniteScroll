@@ -4,7 +4,13 @@
   margin: 0 auto;
 }
 .tableScroll {
-  height: 600px;
+  /* height: 600px; */
   /* height: 554px; */
+  /* overflow: auto; */
+}
+.ant-table-tbody {
+  width: 800px;
+  /* position:absolute; */
   overflow: auto;
+  max-height: 500px;
 }

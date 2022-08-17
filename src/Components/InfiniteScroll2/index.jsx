@@ -84,148 +84,6 @@ export default function InfiniteScroll(props) {
     }
     setAllData(arr);
   };
-  // const allData = [
-  //   {
-  //     key: '1',
-  //     name: 'John Brown',
-  //     age: 32,
-  //     address: 'New York No. 1 Lake Park',
-  //     tags: ['nice', 'developer'],
-  //   },
-  //   {
-  //     key: '2',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //     tags: ['loser'],
-  //   },
-  //   {
-  //     key: '3',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '4',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '5',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '6',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '7',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '8',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '9',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '10',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '11',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '12',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '13',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '14',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '15',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '16',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '17',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '18',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '19',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  //   {
-  //     key: '20',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  // ];
 
   const getData = (page) => {
     setLoading(true)
@@ -236,10 +94,11 @@ export default function InfiniteScroll(props) {
   };
 
   const handleInfiniteOnLoad = () => {
-    console.log(loading,hasMore,'handleInfiniteOnLoad===');
+    console.log('hasMore',hasMore,'handleInfiniteOnLoad===');
     setPage(pre => pre+1)
-    setHasMore(data.length < allData.length)
-    console.log(hasMore,data.length,allData.length,'======');
+    setHasMore(data.length < allData.length-10)
+    console.log('hasMore',hasMore,'data.length',data.length,'allData.length',allData.length,'======');
+    getData(page+1);
   };
 
   // 防抖函数
@@ -263,54 +122,36 @@ export default function InfiniteScroll(props) {
     };
   }
 
-  // 使用原生js获取dom监听滚动事件实现滚动加载数据。
-  const listenScroll = (e) => {
-    let targetDom = e.target
-    const clientHeight = targetDom.clientHeight;
-    const scrollHeight = targetDom.scrollHeight;
-    const scrollTop = targetDom.scrollTop;
-
-    // console.log(clientHeight,scrollHeight,scrollTop,'=============');
-
-    if((scrollHeight - clientHeight - scrollTop === 0) && ((allData.length/pageNum) > pageRef.current)) {
-      // console.log(pageRef.current,'=============');
-        setPage(pre => pre+1)
-        pageRef.current += 1
-    }
-  }
-
-  useEffect(() => {
-    // listenScroll();
-    document.getElementsByClassName('ant-table-body')[0].addEventListener('scroll', debounce(listenScroll,500) )
-  }, [allData]);
-
   useEffect(() => {
     createAllData(100);
   }, []);
 
   useEffect(() => {
     getData(page);
-  }, [page,allData]);
+  }, [allData,page]);
 
   return (
     <div className='main'>
       <h1>InfiniteScroll</h1>
-      <ReactInfiniteScroll
-          initialLoad={false}
-          pageStart={1}
-          loadMore={handleInfiniteOnLoad}
-          // hasMore={!loading && hasMore}
-          hasMore={false}
-          useWindow={false}
-      >
-          <Table
-              columns={columns}
-              dataSource={data}
-              pagination={false}
-              loading={loading}
-              scroll={{x: 900,y:500}}
-          />
-      </ReactInfiniteScroll>
+      <div className='tableScroll'>
+        <ReactInfiniteScroll
+            initialLoad={false}
+            pageStart={1}
+            loadMore={handleInfiniteOnLoad}
+            hasMore={hasMore}
+            useWindow={false}
+            getScrollParent={(le) => document.querySelector('.ant-table-body')}
+        >
+            <Table
+                columns={columns}
+                dataSource={data}
+                pagination={false}
+                loading={loading}
+                scroll={{x: 900,y:500}}
+            >
+            </Table>
+        </ReactInfiniteScroll>
+      </div>
     </div>
     
   )
